@@ -1,3 +1,21 @@
+
+
+table {
+  
+}
+thead {
+    display: inline-block;
+    height: 20px;
+}
+tbody {
+    height: 200px;
+    display: inline-block;
+ 
+    overflow: auto;
+}
+textarea{
+    background-color: rgb(132, 235, 248);
+}
 .hili{
     background-color: rgb(189, 188, 188);
 }
