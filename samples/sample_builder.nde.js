@@ -47,18 +47,18 @@ function gethtm(indir) {
     })
     return { str: str, trs: trs }
 }
-function main(arg) {
-    arg = (undefined === arg) ? { indir: "../libs", outfile: "sample.htm" } : arg
+function main() {
+    
+    var ret1 = gethtm("../libs")
+    var ret2 = gethtm("../data")
 
-    var ret = gethtm(arg.indir)
-
-    var htm = `<html><head>${ret.str}
+    var htm = `<html><head>${ret1.str+ret2.str}
     <!------>
     <script src='sample.js' type='application/javascript'></script>
     <link rel="stylesheet" href="sample.css"></link>
     </head><body>
-    <table border='1'><thead><tr><th>#</th><th>file</th><th>size</th><th>mtime</th></tr><thead>\n<tbody id='sels'>${ret.trs}</tbody></table>\n<textarea id='out' cols='200' rows='100'>...</textarea>\n</body></html>`
-    fs.writeFileSync(arg.outfile, htm, "utf8")
+    <table border='1'><thead><tr><th>#</th><th>file</th><th>size</th><th>mtime</th></tr><thead>\n<tbody id='sels'>${ret1.trs+ret2.trs}</tbody></table>\n<textarea id='out' cols='200' rows='100'>...</textarea>\n</body></html>`
+    fs.writeFileSync("sample.htm", htm, "utf8")
 }
 
 main()
