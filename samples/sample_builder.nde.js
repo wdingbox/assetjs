@@ -30,26 +30,34 @@ var Uti = {
         return outFilesArr;
     }
 }
-function main(arg) {
-    arg = (undefined === arg) ? { indir: "../libs", outfile: "sample.htm" } : arg
+
+function getjs(fname) {
+    return `<script src='${fname}' type='application/javascript'></script>\n`
+}
+function gethtm(indir) {
     const urlroot = "https://wdingbox.github.io/assetjs"
-    function getjs(fname) {
-        return `<script src='${fname}' type='application/javascript'></script>\n`
-    }
-    var str = "", opts = ""
-    var arr = Uti.GetFilesAryFromDir(arg.indir, true, function (fname) {
+    var str = "", trs = ""
+    var arr = Uti.GetFilesAryFromDir(indir, true, function (fname) {
         var sta = fs.statSync(fname)
         fname = fname.substr(3)
-        opts += `<tr><td></td><td class='fname'>${fname}</td><td>${sta.size}</td><td>${sta.mtime}</td></tr>\n`
+        trs += `<tr><td></td><td class='fname'>${fname}</td><td>${sta.size}</td><td>${sta.mtime}</td></tr>\n`
         fname = `${urlroot}/${fname}`
         console.log("fname:", fname, sta)
         str += getjs(fname)
     })
-    str += getjs("sample.js")
-    var htm = `<html><head>${str}
+    return { str: str, trs: trs }
+}
+function main(arg) {
+    arg = (undefined === arg) ? { indir: "../libs", outfile: "sample.htm" } : arg
+
+    var ret = gethtm(arg.indir)
+
+    var htm = `<html><head>${ret.str}
+    <!------>
+    <script src='sample.js' type='application/javascript'></script>
     <link rel="stylesheet" href="sample.css"></link>
     </head><body>
-    <table border='1'><thead><tr><th>#</th><th>file</th><th>size</th><th>mtime</th></tr><thead>\n<tbody id='sels'>${opts}</tbody></table>\n<textarea id='out' cols='200' rows='100'>...</textarea>\n</body></html>`
+    <table border='1'><thead><tr><th>#</th><th>file</th><th>size</th><th>mtime</th></tr><thead>\n<tbody id='sels'>${ret.trs}</tbody></table>\n<textarea id='out' cols='200' rows='100'>...</textarea>\n</body></html>`
     fs.writeFileSync(arg.outfile, htm, "utf8")
 }
 
