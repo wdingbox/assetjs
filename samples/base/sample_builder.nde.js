@@ -57,6 +57,9 @@ function main() {
     <script src='sample.js' type='application/javascript'></script>
     <link rel="stylesheet" href="sample.css"></link>
     </head><body>
+    <a href='https://wdingbox.github.io/assetjs/samples/base/sample.htm'>
+    https://wdingbox.github.io/assetjs/samples/base/sample.htm
+    </a><br>
     <table border='1'><thead><tr><th>#</th><th>file</th><th>size</th><th>mtime</th></tr><thead>\n<tbody id='sels'>${ret1.trs+ret2.trs}</tbody></table>\n<textarea id='out' cols='200' rows='30'>...</textarea>\n</body></html>`
     fs.writeFileSync("sample.htm", htm, "utf8")
 }
