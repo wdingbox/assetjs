@@ -46,10 +46,26 @@ uti_downloader.prototype.Donwload_ObjName_to_NeatJsonfile = function (objname, c
 
     var obj = eval(objname)
     var text = `var ${objname} = \n` + JSON.stringify(obj, null, 4)
-    
+
     var fname = `${objname}.json.js`
     this.Donwload_Text(fname, text)
     if (cbf) cbf(text)
+}
+uti_downloader.prototype.keeping_obj_val_ary_inline = function (obj, objname, cbf) {
+    const jsonStr = JSON.stringify(obj, (key, value) => {
+        // If the value is an array, temporarily turn it into a flat stringified placeholder
+        if (Array.isArray(value)) {
+            return `__ARRAY__${JSON.stringify(value)}__`;
+        }
+        return value;
+    }, 2)
+        // Clean up the placeholders and quotes around the array
+        .replace(/"__ARRAY__(.*?)__"/g, '\$1').replace(/\\/g, "").replace(/"/g, "'");
+
+    var restr = `// gen by uti_downloader.js \r\nvar ${objname}=\r\n`
+    if (cbf) restr = cbf(jsonStr)
+    restr += `${jsonStr}`
+    return restr
 }
 uti_downloader.prototype.Donwload_Text = function (dwnfname, dwntext) {
 
@@ -62,7 +78,7 @@ uti_downloader.prototype.Donwload_Text = function (dwnfname, dwntext) {
     URL.revokeObjectURL(link.href);
 
     //if (link.destroy) {
-        link.destroy() //prevent from multiple download.
+    link.destroy() //prevent from multiple download.
     //}
     link.remove()
     delete link;
