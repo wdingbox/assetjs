@@ -8,7 +8,7 @@ function uti_enableMove(eid, movableClass) {
     var _THIS = this
     this.m_dragmovable_element.onclick = function (e) {
         // Only execute if the user clicked directly on the parent, NOT a child
-        if (event.target !== event.currentTarget) {
+        if (e.target !== e.currentTarget) {
             return; // Ignore event originating from any child
         }
         $(this).toggleClass(movableClass)
