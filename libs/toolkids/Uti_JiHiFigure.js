@@ -38,14 +38,6 @@ Uti_JiHiFigure.id2fig = function (id, cb_extraInfo) {
     var img = `<figure style='margin: 0;display: inline-block;' class='mi'><img class='default_figimg' src='${src}'><figcaption>${id}${extraInfo}</figcaption></figure>`
     return img;
 }
-Uti_JiHiFigure.id2fig__ = function (id, cb_extraInfo) {
-    id = id.trim()
-    var extraInfo = ""
-    if (cb_extraInfo) extraInfo = cb_extraInfo(id)
-    var src = Uti_JiHiFigure.id2src(id)
-    var img = `<img class='default_figimg' src='${src}'>`
-    return img;
-}
 Uti_JiHiFigure.ids2figs = function (idary, cb_extraInfo) {
     var ret = ""
     if (typeof idary === 'string') idary = idary.split(",");
@@ -57,7 +49,21 @@ Uti_JiHiFigure.ids2figs = function (idary, cb_extraInfo) {
     });
     return ret;
 }
-
+Uti_JiHiFigure.id2img = function (id, cb_extraInfo) {
+    id = id.trim()
+    var extraInfo = ""
+    if (cb_extraInfo) extraInfo = cb_extraInfo(id)
+    var src = Uti_JiHiFigure.id2src(id)
+    var img = `<img class='default_img' src='${src}'>`
+    return img;
+}
+Uti_JiHiFigure.idary2imgs = function (idary, cb_extraInfo) {
+    var imgs = ""
+    idary.forEach(function (jid) {
+        imgs += Uti_JiHiFigure.id2img(jid, cb_extraInfo)
+    })
+    return imgs;
+}
 
 
 Uti_JiHiFigure.src2id = function (img_src) {
@@ -359,7 +365,6 @@ var copy_fr____JgwUti = {
         return items;
     },
 };
-
 
 
 
