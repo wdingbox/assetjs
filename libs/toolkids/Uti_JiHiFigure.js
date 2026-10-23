@@ -26,11 +26,11 @@ Uti_JiHiFigure.set_localstore = function (obj) {
 }
 Uti_JiHiFigure.get_localstore = function () {// each app need to run this first.
     var str = localStorage.getItem("Uti_JiHiFigure.paramsObj")
-    if (!str) return alert("failed to get Uti_JiHiFigure.paramsObj from localStorage. \nPlease run Uti_JiHiFigure.set_localstore(obj) first.")
+    if (!str || str.length === 0) return alert("failed to get Uti_JiHiFigure.paramsObj from localStorage. \nPlease run Uti_JiHiFigure.set_localstore(obj) first.")
     var obj = JSON.parse(str)
     Uti_JiHiFigure.paramsObj = obj
 }
-
+Uti_JiHiFigure.get_localstore ();
 
 Uti_JiHiFigure.id2src = function (pic_ids) {
     if (pic_ids.match(/\d{5}/)) {
