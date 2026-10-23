@@ -20,7 +20,7 @@ var Uti_JiHiFigure = {
     test: function () { }
 }
 Uti_JiHiFigure.set_localstore = function (obj) {
-    if(!obj) return alert("Uti_JiHiFigure unable to set null obj.")
+    if (!obj) return alert("Uti_JiHiFigure unable to set null obj.")
     var str = JSON.stringify(obj)
     localStorage.setItem("Uti_JiHiFigure.paramsObj", str)
 }
@@ -30,7 +30,7 @@ Uti_JiHiFigure.get_localstore = function () {// each app need to run this first.
     var obj = JSON.parse(str)
     Uti_JiHiFigure.paramsObj = obj
 }
-Uti_JiHiFigure.get_localstore ();
+Uti_JiHiFigure.get_localstore();
 
 Uti_JiHiFigure.id2src = function (pic_ids) {
     if (pic_ids.match(/\d{5}/)) {
@@ -73,13 +73,16 @@ Uti_JiHiFigure.id2img = function (id, cb_extraInfo) {
 Uti_JiHiFigure.idary2imgs = function (idary, cb_extraInfo) {
     var imgs = ""
     idary.forEach(function (jid) {
-        imgs += Uti_JiHiFigure.id2img(jid, cb_extraInfo)
+        if (jid && jid.length > 0) {
+            imgs += Uti_JiHiFigure.id2img(jid, cb_extraInfo)
+        }
     })
     return imgs;
 }
 
 
 Uti_JiHiFigure.src2id = function (img_src) {
+    if (!img_src) return ""
     img_src = img_src.trim();
     var mat = img_src.match(/[\/](\w{1,20}).\w{3,4}$/);
     if (mat) {
