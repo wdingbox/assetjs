@@ -19,15 +19,28 @@ var Uti_JiHiFigure = {
 
     test: function () { }
 }
+Uti_JiHiFigure.set_localstore = function (obj) {
+    if(!obj) return alert("Uti_JiHiFigure unable to set null obj.")
+    var str = JSON.stringify(obj)
+    localStorage.setItem("Uti_JiHiFigure.paramsObj", str)
+}
+Uti_JiHiFigure.get_localstore = function () {// each app need to run this first.
+    var str = localStorage.getItem("Uti_JiHiFigure.paramsObj")
+    if (!str) return alert("failed to get Uti_JiHiFigure.paramsObj from localStorage. \nPlease run Uti_JiHiFigure.set_localstore(obj) first.")
+    var obj = JSON.parse(str)
+    Uti_JiHiFigure.paramsObj = obj
+}
+
+
 Uti_JiHiFigure.id2src = function (pic_ids) {
     if (pic_ids.match(/\d{5}/)) {
         var id = parseInt(pic_ids)
         if (id < 20000) {//cnf png
-            return `${Uti_JiHiFigure.BASE_CNF.path}${pic_ids}.${Uti_JiHiFigure.BASE_CNF.ext}`
+            return `${Uti_JiHiFigure.paramsObj.BASE_CNF.path}${pic_ids}.${Uti_JiHiFigure.paramsObj.BASE_CNF.ext}`
         }
-        return `${Uti_JiHiFigure.BASE_ANT.path}${pic_ids}.${Uti_JiHiFigure.BASE_ANT.ext}`
+        return `${Uti_JiHiFigure.paramsObj.BASE_ANT.path}${pic_ids}.${Uti_JiHiFigure.paramsObj.BASE_ANT.ext}`
     }
-    return `${Uti_JiHiFigure.BASE_HIERO.path}${pic_ids}.${Uti_JiHiFigure.BASE_HIERO.ext}`
+    return `${Uti_JiHiFigure.paramsObj.BASE_HIERO.path}${pic_ids}.${Uti_JiHiFigure.paramsObj.BASE_HIERO.ext}`
 }
 Uti_JiHiFigure.id2fig = function (id, cb_extraInfo) {
     //for horiz arrage: style='margin: 0;display: inline-block;'
