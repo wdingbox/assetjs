@@ -91,9 +91,10 @@ Uti_JiHiFigure.src2id = function (img_src) {
     }
     return img_src;
 }
-Uti_JiHiFigure.imgHolder2idary = function (ehldr) {
+Uti_JiHiFigure.imgHolder2idary = function (ehldr, imgFinder) {
+    if(!imgFinder) imgFinder = "img"
     var retar = []
-    $(ehldr).find("img").each(function () {
+    $(ehldr).find(imgFinder).each(function () {
         var src = $(this).attr("src").trim();
         retar.push(Uti_JiHiFigure.src2id(src))
     })
